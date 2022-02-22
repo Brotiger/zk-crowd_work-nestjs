@@ -9,11 +9,6 @@ import { LoginApplicantDto } from './dto/login-applicant.dto';
 export class ApplicantAuthController {
   constructor(private applicantAuthService: ApplicantAuthService) { }
 
-  @Get('/test')
-  test() {
-    return process.env.PRIVATE_KEY
-  }
-
   @Post('/login')
   login(@Body() loginApplicantDto: LoginApplicantDto) {
     return this.applicantAuthService.login(loginApplicantDto)
