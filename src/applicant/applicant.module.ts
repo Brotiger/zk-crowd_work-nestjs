@@ -5,8 +5,13 @@ import { Applicant } from './applicant.entity'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Applicant])],
+  imports: [
+    TypeOrmModule.forFeature([Applicant])
+  ],
   controllers: [ApplicantController],
-  providers: [ApplicantService]
+  providers: [ApplicantService],
+  exports: [
+    ApplicantService
+  ]
 })
-export class ApplicantModule {}
+export class ApplicantModule { }

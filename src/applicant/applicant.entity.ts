@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import { ApplicantType } from './types/applicant-type'
+
 
 @Entity()
 export class Applicant {
@@ -22,4 +24,8 @@ export class Applicant {
   @ApiProperty({ example: 'example@example.ru', description: 'Email' })
   @Column({ nullable: true, unique: true })
   email: string
+
+  @ApiProperty({ example: 'humman/company', description: 'Кем является заявитель (ЮР/ФИЗ. лицом)' })
+  @Column({ default: ApplicantType['humman'] })
+  type: ApplicantType
 }
