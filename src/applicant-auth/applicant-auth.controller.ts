@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateApplicantDto } from '../applicant/dto/create-applicant.dto';
 import { ApplicantAuthService } from './applicant-auth.service';
@@ -8,6 +8,11 @@ import { LoginApplicantDto } from './dto/login-applicant.dto';
 @Controller('applicant-auth')
 export class ApplicantAuthController {
   constructor(private applicantAuthService: ApplicantAuthService) { }
+
+  @Get('/test')
+  test() {
+    return process.env.PRIVATE_KEY
+  }
 
   @Post('/login')
   login(@Body() loginApplicantDto: LoginApplicantDto) {

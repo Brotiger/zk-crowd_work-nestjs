@@ -1,8 +1,7 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common'
+import { Controller, Get, Post, Query } from '@nestjs/common'
 import { ApiOperation, ApiResponse } from '@nestjs/swagger'
 import { Applicant } from './applicant.entity'
 import { ApplicantService } from './applicant.service'
-import { CreateApplicantDto } from './dto/create-applicant.dto'
 import { GetAllApplicantDto } from './dto/get-all-applicant.dto'
 
 @Controller('applicant')
