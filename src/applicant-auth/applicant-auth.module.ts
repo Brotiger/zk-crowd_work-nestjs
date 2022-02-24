@@ -1,4 +1,4 @@
-import { CacheModule, Module } from '@nestjs/common';
+import { CacheModule, forwardRef, Module } from '@nestjs/common';
 import { ApplicantAuthService } from './applicant-auth.service';
 import { ApplicantAuthController } from './applicant-auth.controller';
 import { JwtModule } from '@nestjs/jwt';
@@ -14,13 +14,17 @@ import { CheckCodeModule } from '../check-code/check-code.module';
       envFilePath: `./env/${process.env.NODE_ENV}.env`
     }),
     CheckCodeModule,
-    ApplicantModule,
+    forwardRef(() => ApplicantModule),
     JwtModule.register({
       secret: process.env.PRIVATE_KEY,
       signOptions: {
         expiresIn: '24h'
       }
     })
+  ],
+  exports: [
+    ApplicantAuthService,
+    JwtModule
   ]
 })
 export class ApplicantAuthModule { }

@@ -1,9 +1,10 @@
-import { CACHE_MANAGER, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Applicant } from './applicant.entity'
 import { CreateApplicantDto } from './dto/create-applicant.dto'
 import { GetAllApplicantDto } from './dto/get-all-applicant.dto'
+import { Request } from 'express';
 
 @Injectable()
 export class ApplicantService {
@@ -39,6 +40,12 @@ export class ApplicantService {
         "phone": phone
       }
     })
+
+    return applicant
+  }
+
+  async getCurrent(request: Request) {
+    const applicant = await this.applicantRepository.findOne(request.body.user.id)
 
     return applicant
   }
