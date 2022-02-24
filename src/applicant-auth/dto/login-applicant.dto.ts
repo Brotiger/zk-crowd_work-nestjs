@@ -1,6 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsPhoneNumber, IsString } from "class-validator";
-import { ApplicantType } from "../../applicant/types/applicant-type";
+import { IsNotEmpty, IsPhoneNumber, IsString } from "class-validator";
 
 export class LoginApplicantDto {
   @ApiProperty({ example: '88888888888', description: 'Номер телефона' })
