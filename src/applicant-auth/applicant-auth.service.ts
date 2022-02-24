@@ -34,7 +34,7 @@ export class ApplicantAuthService {
   }
 
   private async generateToken(appicant) {
-    const payload = { phone: appicant.phone, type: appicant.type, id: appicant.id }
+    const payload = { type: appicant.type, id: appicant.id, user: 'applicant' }
     return {
       token: this.jwtService.sign(payload)
     }

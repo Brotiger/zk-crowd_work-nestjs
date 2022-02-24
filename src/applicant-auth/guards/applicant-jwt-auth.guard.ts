@@ -3,7 +3,7 @@ import { JwtService } from "@nestjs/jwt";
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class JwtAuthGuard implements CanActivate {
+export class ApplicantJwtAuthGuard implements CanActivate {
   constructor(private jwtServce: JwtService) { }
 
   canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
@@ -17,8 +17,11 @@ export class JwtAuthGuard implements CanActivate {
         throw new UnauthorizedException({ message: 'Пользователь не авторизован' });
       }
 
-      const user = this.jwtServce.verify(token);
-      req.body.user = user;
+      const applicant = this.jwtServce.verify(token);
+
+      if (applicant['user'] != 'applicant') {
+        throw new UnauthorizedException({ message: 'Вы не являетесь заявителем' });
+      }
 
       return true;
     } catch (e) {
