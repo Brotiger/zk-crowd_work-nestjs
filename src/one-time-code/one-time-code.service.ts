@@ -23,6 +23,6 @@ export class OneTimeCodeService {
     }
 
     const cacheManagerKey = `code_${dto.phone}`;
-    await this.cacheManager.set(cacheManagerKey, code, { ttl: 300 });
+    await this.cacheManager.set(cacheManagerKey, code, { ttl: this.configService.get('code_ttl') });
   }
 }

@@ -11,11 +11,11 @@ export class SmsService {
   ) { }
 
   async sendSMS(message: string, phone: string) {
-    const cacheManagerKey = `code_already_sent_${phone}`;
+    const cacheManagerKey = `sms_already_sent_${phone}`;
     if (await this.cacheManager.get(cacheManagerKey)) {
       throw new HttpException('The message with code has already been sent before', HttpStatus.FORBIDDEN);
     } else {
-      await this.cacheManager.set(cacheManagerKey, new Date(), { ttl: 300 });
+      await this.cacheManager.set(cacheManagerKey, new Date(), { ttl: this.configService.get('sms_ttl') });
     }
 
     try {
