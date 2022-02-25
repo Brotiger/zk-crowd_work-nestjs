@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
+import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { Observable } from 'rxjs';
 
@@ -14,18 +14,18 @@ export class ApplicantJwtAuthGuard implements CanActivate {
       const token = authHeader.split(' ')[1];
 
       if (bearer !== 'Bearer' || !token) {
-        throw new UnauthorizedException({ message: 'Пользователь не авторизован' });
+        throw new UnauthorizedException({ message: 'User not authorized' });
       }
 
       const applicant = this.jwtServce.verify(token);
 
       if (applicant['user'] != 'applicant') {
-        throw new UnauthorizedException({ message: 'Вы не являетесь заявителем' });
+        throw new HttpException('You are not applicant', HttpStatus.BAD_REQUEST);
       }
 
       return true;
     } catch (e) {
-      throw new UnauthorizedException({ message: 'Пользователь не авторизован' });
+      throw new UnauthorizedException({ message: 'User not authorized' });
     }
   }
 }

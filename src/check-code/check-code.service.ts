@@ -7,11 +7,13 @@ export class CheckCodeService {
   ) { }
 
   async checkCode(phone: string, code: string) {
-    const cacheCode = await this.cacheManager.get(phone);
+    const cacheManagerKey = `code_${phone}`;
+    const cacheCode = await this.cacheManager.get(cacheManagerKey);
+
+    await this.cacheManager.del(cacheManagerKey);
 
     if (cacheCode != code) {
-      throw new HttpException('Код не верный', HttpStatus.FORBIDDEN);
+      throw new HttpException('Code is not correct', HttpStatus.FORBIDDEN);
     }
-    await this.cacheManager.del(phone);
   }
 }

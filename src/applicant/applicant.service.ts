@@ -48,7 +48,7 @@ export class ApplicantService {
 
       return applicant;
     } catch (e) {
-      throw new HttpException('Пользователь не найден', HttpStatus.BAD_REQUEST);
+      throw new HttpException('User is not found', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -58,7 +58,7 @@ export class ApplicantService {
 
       return applicant
     } catch (e) {
-      throw new HttpException('Пользователь не найден', HttpStatus.BAD_REQUEST);
+      throw new HttpException('User is not found', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -83,7 +83,7 @@ export class ApplicantService {
       return applicant;
 
     } catch (e) {
-      throw new HttpException('Пользователь не обновлен', HttpStatus.BAD_REQUEST);
+      throw new HttpException('User not updated', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -93,14 +93,14 @@ export class ApplicantService {
       const token = currentApplicantTokenDto.authorization.split(' ')[1];
 
       if (bearer !== 'Bearer' || !token) {
-        throw new UnauthorizedException({ message: 'Пользователь не авторизован' });
+        throw new UnauthorizedException({ message: 'User not authorized' });
       }
 
       const decodeToken = this.jwtServce.verify(token);
 
       return decodeToken;
     } catch (e) {
-      throw new UnauthorizedException({ message: 'Пользователь не авторизован' });
+      throw new UnauthorizedException({ message: 'User not authorized' });
     }
   }
 }

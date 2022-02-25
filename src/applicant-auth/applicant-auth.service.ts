@@ -26,7 +26,7 @@ export class ApplicantAuthService {
     const candidate = await this.applicantService.getByPhone(createApplicantDto.phone);
 
     if (candidate) {
-      throw new HttpException('Пользователь с таким номером уже зарегистрирован', HttpStatus.BAD_REQUEST);
+      throw new HttpException('User with this number is already registered', HttpStatus.BAD_REQUEST);
     }
 
     const applicant = await this.applicantService.create(createApplicantDto);
@@ -47,6 +47,6 @@ export class ApplicantAuthService {
       return applicant;
     }
 
-    throw new HttpException('Пользователь не найден', HttpStatus.FORBIDDEN);
+    throw new HttpException('User is not found', HttpStatus.FORBIDDEN);
   }
 }
