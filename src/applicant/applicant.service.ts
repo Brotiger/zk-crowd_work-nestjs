@@ -48,7 +48,7 @@ export class ApplicantService {
 
       return applicant;
     } catch (e) {
-      throw new HttpException('User is not found', HttpStatus.BAD_REQUEST);
+      return false;
     }
   }
 

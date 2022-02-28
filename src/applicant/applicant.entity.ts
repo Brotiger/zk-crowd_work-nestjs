@@ -25,7 +25,7 @@ export class Applicant {
   @Column({ nullable: true, unique: true })
   email: string
 
-  @ApiProperty({ example: 'humman/company', description: 'Кем является заявитель (ЮР/ФИЗ. лицом)' })
+  @ApiProperty({ example: 'human', description: 'Кем является заявитель (ЮР/ФИЗ. лицом)' })
   @Column({ default: ApplicantType['humman'] })
   type: ApplicantType
 }

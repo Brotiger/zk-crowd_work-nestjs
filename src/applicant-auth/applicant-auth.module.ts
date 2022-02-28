@@ -1,4 +1,4 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { CacheModule, forwardRef, Module } from '@nestjs/common';
 import { ApplicantAuthService } from './applicant-auth.service';
 import { ApplicantAuthController } from './applicant-auth.controller';
 import { JwtModule } from '@nestjs/jwt';
@@ -9,6 +9,7 @@ import { CheckCodeModule } from '../check-code/check-code.module';
   providers: [ApplicantAuthService],
   controllers: [ApplicantAuthController],
   imports: [
+    CacheModule.register(),
     ConfigModule,
     CheckCodeModule,
     forwardRef(() => ApplicantModule),

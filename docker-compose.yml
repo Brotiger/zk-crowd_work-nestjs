@@ -1,5 +1,17 @@
 version: "3"
 services:
+  main:
+    container_name: crowd_work_main
+    build:
+      context: .
+    env_file:
+      - ./env/development.env
+    ports:
+      - 8080:8080
+    command: npm run start
+    depends_on:
+      - mysql
+    restart: always
 
   mysql:
     image: mysql:5.7

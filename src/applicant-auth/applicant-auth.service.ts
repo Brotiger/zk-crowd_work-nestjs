@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ApplicantService } from '../applicant/applicant.service';
 import { CreateApplicantDto } from '../applicant/dto/create-applicant.dto';
@@ -10,13 +10,17 @@ export class ApplicantAuthService {
   constructor(
     private applicantService: ApplicantService,
     private checkCodeService: CheckCodeService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    @Inject(CACHE_MANAGER) private cacheManager: any
   ) { }
 
   async login(loginApplicantDto: LoginApplicantDto) {
     await this.checkCodeService.checkCode(loginApplicantDto.phone, loginApplicantDto.code);
 
     const applicant = await this.validateApplicant(loginApplicantDto);
+
+    await this.deleteChacheCode(loginApplicantDto.phone);
+
     return this.generateToken(applicant);
   }
 
@@ -30,7 +34,18 @@ export class ApplicantAuthService {
     }
 
     const applicant = await this.applicantService.create(createApplicantDto);
+
+    await this.deleteChacheCode(createApplicantDto.phone);
+
     return this.generateToken(applicant);
+  }
+
+  private async deleteChacheCode(phone: string) {
+    let cacheManagerKey = `sms_already_sent_${phone}`;
+    await this.cacheManager.del(cacheManagerKey);
+
+    cacheManagerKey = `code_${phone}`;
+    await this.cacheManager.del(cacheManagerKey);
   }
 
   private async generateToken(appicant) {

@@ -2,11 +2,23 @@ import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
+import * as basicAuth from 'express-basic-auth'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
+  app.use(
+    ['/docs', '/docs-json'],
+    basicAuth({
+      challenge: true,
+      users: {
+        'admin': process.env.DOC_PASSWORD
+      },
+    }),
+  );
+
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('Crowd Work')
     .setDescription('Документация REST API')
     .setVersion('1.0.0')

@@ -35,7 +35,7 @@ export class CreateApplicantDto {
   @IsString()
   readonly code: string;
 
-  @ApiProperty({ example: 'humman/company', description: 'Кем является заявитель (ЮР/ФИЗ. лицом)' })
+  @ApiProperty({ example: 'human', description: 'Кем является заявитель (ЮР/ФИЗ. лицом)' })
   @IsNotEmpty()
   @IsEnum(ApplicantType)
   readonly type: ApplicantType

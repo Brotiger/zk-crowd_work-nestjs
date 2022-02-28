@@ -16,13 +16,14 @@ export class OneTimeCodeService {
 
     const message = `Confirmation code: ${code}`;
 
+    const cacheManagerKey = `code_${dto.phone}`;
+    await this.cacheManager.set(cacheManagerKey, code, { ttl: this.configService.get('code_ttl') });
+
     if (this.configService.get('production')) {
       await this.smsService.sendSMS(message, dto.phone);
     } else {
       console.log(code);
+      return code;
     }
-
-    const cacheManagerKey = `code_${dto.phone}`;
-    await this.cacheManager.set(cacheManagerKey, code, { ttl: this.configService.get('code_ttl') });
   }
 }
