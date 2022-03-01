@@ -1,4 +1,9 @@
 # CrowdWork инструкция по запуску
+## Необходимые программы
++ docker
++ docker-compose
++ nodejs v15.5.1
+
 ## Переменные окружения для docker
 + MYSQL_ROOT_PASSWORD - Пароль от mysql для пользователя root
 + NODE_ENV - Тип сборки (development/production)
@@ -22,7 +27,12 @@
 
 + DOC_PASSWORD - Пароль от Swagger (Логин - admin)
 
+## Установка зависимостей
+npm i -g @nestjs/cli
+npm i
+
 ## Сборка
+npm run build
 docker-compose build
 
 ## Запуск
