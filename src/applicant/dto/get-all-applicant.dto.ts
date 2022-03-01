@@ -1,13 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumberString } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsInt, IsNotEmpty } from "class-validator";
 
 export class GetAllApplicantDto {
   @ApiProperty({ example: 0, description: 'С какой записи начинать' })
-  @IsNumberString()
+  @IsInt()
+  @IsNotEmpty()
+  @Transform(({ value }) => Number.parseInt(value))
   readonly offset: number;
 
   @ApiProperty({ example: 10, description: 'Солько записей запросить' })
-  @IsNumberString()
+  @IsInt()
   @IsNotEmpty()
+  @Transform(({ value }) => Number.parseInt(value))
   readonly limit: number;
 }

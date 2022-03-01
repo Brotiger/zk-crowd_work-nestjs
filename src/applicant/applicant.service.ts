@@ -8,6 +8,8 @@ import { CreateApplicantDto } from './dto/create-applicant.dto';
 import { GetAllApplicantDto } from './dto/get-all-applicant.dto';
 import { CurrentApplicantTokenDto } from './dto/current-applicant-token.dto';
 import { UpdateApplicantDto } from './dto/update-applicant.dto';
+import { PaginatedDto } from '../components/paginated/dto/paginated-dto';
+import { PageMetaDto } from '../components/paginated/dto/page-meta.dto';
 
 @Injectable()
 export class ApplicantService {
@@ -30,15 +32,14 @@ export class ApplicantService {
   }
 
   async getAll(dto: GetAllApplicantDto) {
-    const [applicant, count] = await this.applicantRepository.findAndCount({
+    const [applicant, total] = await this.applicantRepository.findAndCount({
       take: dto.limit,
       skip: dto.offset
     });
 
-    return {
-      data: applicant,
-      count: count
-    }
+    const pageMetaDto = new PageMetaDto(total, dto.limit, dto.offset)
+
+    return new PaginatedDto(applicant, pageMetaDto)
   }
 
   async getByPhone(phone: string) {

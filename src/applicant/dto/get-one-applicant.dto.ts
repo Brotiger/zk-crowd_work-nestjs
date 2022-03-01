@@ -1,9 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumberString } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsInt, IsNotEmpty } from "class-validator";
 
 export class GetOneApplicantDto {
   @ApiProperty({ example: '1', description: 'Id пользователя' })
   @IsNotEmpty()
-  @IsNumberString()
+  @IsInt()
+  @Transform(({ value }) => Number.parseInt(value))
   readonly id: number;
 }
