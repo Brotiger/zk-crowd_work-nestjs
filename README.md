@@ -32,4 +32,4 @@ npm run build
 docker-compose build
 
 ## Запуск
-docker-compose up
+docker-compose up -d
