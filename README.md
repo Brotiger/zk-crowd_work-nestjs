@@ -14,17 +14,13 @@
 
 + NODE_ENV - Тип сборки
 + PORT - Порт на котором должно работать приложение внутри контейнера
-
 + TWILIO_ACCOUNT_SID - ID аккаунта twilio
 + TWILIO_AUTH_TOKE - Токен для авторизации в twilio
 + TWILIO_PHONE_FROM - Номер twilio с которого будут отправляться СМС
-
 + JWT_PRIVATE_KEY - Приватный ключ для подписи JWT
 + JWT_EXPIRES_IN - Срок действия JWT
-
 + CODE_TTL - Время хранения кода в кеше
 + SMS_TTL - Промежуток времени раз в который пользователь может получать СМС
-
 + DOC_PASSWORD - Пароль от Swagger (Логин - admin)
 
 ## Установка зависимостей
