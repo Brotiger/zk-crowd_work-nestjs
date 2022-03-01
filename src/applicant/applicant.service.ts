@@ -30,12 +30,15 @@ export class ApplicantService {
   }
 
   async getAll(dto: GetAllApplicantDto) {
-    const applicant = await this.applicantRepository.find({
+    const [applicant, count] = await this.applicantRepository.findAndCount({
       take: dto.limit,
       skip: dto.offset
     });
 
-    return applicant;
+    return {
+      data: applicant,
+      count: count
+    }
   }
 
   async getByPhone(phone: string) {

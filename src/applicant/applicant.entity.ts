@@ -17,7 +17,7 @@ export class Applicant {
   @Column({ nullable: true })
   lastName: string
 
-  @ApiProperty({ example: '88888888888', description: 'Номер телефона' })
+  @ApiProperty({ example: '+78888888888', description: 'Номер телефона' })
   @Column({ unique: true })
   phone: string
 
