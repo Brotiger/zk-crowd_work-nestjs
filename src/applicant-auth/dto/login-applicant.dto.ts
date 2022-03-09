@@ -6,7 +6,7 @@ dotenv.config({ path: `./env/${process.env.NODE_ENV}.env` })
 const mobilePrefixRegex = /^\+/;
 
 export class LoginApplicantDto {
-  @ApiProperty({ example: '+7888888888', description: 'Номер телефона' })
+  @ApiProperty({ example: '+7888888888', description: 'Phone number' })
   @IsNotEmpty()
   @Matches(mobilePrefixRegex, {
     message: 'phone must start with +'
@@ -14,7 +14,7 @@ export class LoginApplicantDto {
   @IsMobilePhone(process.env.LOCALE)
   readonly phone: string;
 
-  @ApiProperty({ example: '56fdg56', description: 'Код из СМС' })
+  @ApiProperty({ example: '56fdg56', description: 'SMS code' })
   @IsNotEmpty()
   @IsString()
   readonly code: string;

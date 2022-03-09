@@ -28,7 +28,7 @@ export class ApplicantService {
     applicant.email = dto.email;
     applicant.type = dto.type;
 
-    return this.applicantRepository.save(applicant);
+    return await this.applicantRepository.save(applicant);
   }
 
   async getAll(dto: GetAllApplicantDto) {
@@ -91,7 +91,7 @@ export class ApplicantService {
     }
   }
 
-  private async decodeToken(currentApplicantTokenDto: CurrentApplicantTokenDto) {
+  async decodeToken(currentApplicantTokenDto: CurrentApplicantTokenDto) {
     try {
       const bearer = currentApplicantTokenDto.authorization.split(' ')[0];
       const token = currentApplicantTokenDto.authorization.split(' ')[1];

@@ -7,7 +7,7 @@ dotenv.config({ path: `./env/${process.env.NODE_ENV}.env` });
 const mobilePrefixRegex = /^\+/;
 
 export class CreateApplicantDto {
-  @ApiProperty({ example: '+78888888888', description: 'Номер телефона' })
+  @ApiProperty({ example: '+78888888888', description: 'Phone number' })
   @IsNotEmpty()
   @Matches(mobilePrefixRegex, {
     message: 'phone must start with +'
@@ -15,12 +15,12 @@ export class CreateApplicantDto {
   @IsMobilePhone(process.env.LOCALE)
   readonly phone: string;
 
-  @ApiProperty({ example: 'Leonardo', description: 'Имя' })
+  @ApiProperty({ example: 'Leonardo', description: 'First name' })
   @IsOptional()
   @IsString()
   readonly firstName: string;
 
-  @ApiProperty({ example: 'Dicaprio', description: 'Фамилия' })
+  @ApiProperty({ example: 'Dicaprio', description: 'Last name' })
   @IsOptional()
   @IsString()
   readonly lastName: string;
@@ -30,12 +30,12 @@ export class CreateApplicantDto {
   @IsEmail()
   readonly email: string;
 
-  @ApiProperty({ example: '56fdg56', description: 'Код из СМС' })
+  @ApiProperty({ example: '56fdg56', description: 'SMS code' })
   @IsNotEmpty()
   @IsString()
   readonly code: string;
 
-  @ApiProperty({ example: 'human', description: 'Кем является заявитель (ЮР/ФИЗ. лицом)' })
+  @ApiProperty({ example: 'human', description: 'Who is applicant? (humman or company)' })
   @IsNotEmpty()
   @IsEnum(ApplicantType)
   readonly type: ApplicantType

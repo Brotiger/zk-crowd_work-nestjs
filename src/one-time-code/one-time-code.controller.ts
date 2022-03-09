@@ -3,15 +3,17 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { OneTimeCodeService } from './one-time-code.service'
 import { CreateOneTimeCodeDto } from './dto/create-one-time-code';
 
-@ApiTags('Получение одноразового кода')
+@ApiTags('One-time code')
 @Controller('one-time-code')
 export class OneTimeCodeController {
   constructor(private readonly oneTimeCodeService: OneTimeCodeService) { }
 
-  @ApiOperation({ summary: 'Создание одноразового кода' })
-  @ApiResponse({ status: 201, description: 'Код будет отправлен по СМС на указанный номер' })
+  @ApiOperation({ summary: 'Getting one-time code' })
+  @ApiResponse({ status: 201, description: 'The code will be sent by SMS to the specified number' })
   @Post()
-  async create(@Body() createOneTimeCodeDto: CreateOneTimeCodeDto) {
+  async create(
+    @Body() createOneTimeCodeDto: CreateOneTimeCodeDto
+  ) {
     return await this.oneTimeCodeService.generate(createOneTimeCodeDto)
   }
 }

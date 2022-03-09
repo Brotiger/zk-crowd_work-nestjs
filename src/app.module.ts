@@ -9,6 +9,9 @@ import { CheckCodeModule } from './check-code/check-code.module';
 import { SmsService } from './sms/sms.service';
 import { SmsModule } from './sms/sms.module';
 import { configuration } from './config/configuration';
+import { IssueModule } from './issue/issue.module';
+import { UploadFile } from './upload-file/upload-file.entity';
+
 @Module({
   imports: [
     CacheModule.register(),
@@ -23,7 +26,9 @@ import { configuration } from './config/configuration';
     OneTimeCodeModule,
     ApplicantAuthModule,
     CheckCodeModule,
-    SmsModule
+    SmsModule,
+    IssueModule,
+    UploadFile
   ],
   providers: [CheckCodeService, SmsService]
 })
