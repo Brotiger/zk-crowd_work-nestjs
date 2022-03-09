@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ApplicantService } from '../applicant/applicant.service';
-import { CurrentApplicantTokenDto } from '../applicant/dto/current-applicant-token.dto';
+import { UserService } from '../user/user.service';
+import { CurrentUserTokenDto } from '../user/dto/current-user-token.dto';
 import { CreateIssueDto } from './dto/create-issue.dto';
 import { Issue } from './issue.entity';
 
@@ -11,16 +11,16 @@ export class IssueService {
   constructor(
     @InjectRepository(Issue)
     private issueRepository: Repository<Issue>,
-    private applicantService: ApplicantService
+    private userService: UserService
   ) { }
 
-  async create(createIssueDto: CreateIssueDto, currentApplicantTokenDto: CurrentApplicantTokenDto) {
+  async create(createIssueDto: CreateIssueDto, currentUserTokenDto: CurrentUserTokenDto) {
     const issue = await this.issueRepository.create();
-    const decodeToken = await this.applicantService.decodeToken(currentApplicantTokenDto);
+    const decodeToken = await this.userService.decodeToken(currentUserTokenDto);
 
     issue.subject = createIssueDto.subject;
     issue.description = createIssueDto.description;
-    issue.applicant = decodeToken.id;
+    issue.user = decodeToken.id;
 
     return await this.issueRepository.save(issue);
   }

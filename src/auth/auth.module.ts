@@ -1,18 +1,18 @@
 import { CacheModule, forwardRef, Module } from '@nestjs/common';
-import { ApplicantAuthService } from './applicant-auth.service';
-import { ApplicantAuthController } from './applicant-auth.controller';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { ApplicantModule } from '../applicant/applicant.module';
+import { UserModule } from '../user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CheckCodeModule } from '../check-code/check-code.module';
 @Module({
-  providers: [ApplicantAuthService],
-  controllers: [ApplicantAuthController],
+  providers: [AuthService],
+  controllers: [AuthController],
   imports: [
     CacheModule.register(),
     ConfigModule,
     CheckCodeModule,
-    forwardRef(() => ApplicantModule),
+    forwardRef(() => UserModule),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -25,8 +25,8 @@ import { CheckCodeModule } from '../check-code/check-code.module';
     })
   ],
   exports: [
-    ApplicantAuthService,
+    AuthService,
     JwtModule
   ]
 })
-export class ApplicantAuthModule { }
+export class AuthModule { }

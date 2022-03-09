@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
 import { IsInt, IsNotEmpty, Max } from "class-validator";
 
-export class GetAllApplicantDto {
+export class GetAllUserTypeDto {
   @ApiProperty({ example: 0, description: 'Offset' })
   @IsInt()
   @IsNotEmpty()

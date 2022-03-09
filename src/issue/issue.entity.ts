@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm'
-import { Applicant } from '../applicant/applicant.entity'
-import { UploadFile } from '../upload-file/upload-file.entity'
+import { User } from '../user/user.entity'
 
 @Entity()
 export class Issue {
@@ -17,6 +16,6 @@ export class Issue {
   @Column()
   description: string
 
-  @ManyToOne(() => Applicant, { nullable: false })
-  applicant: Applicant
+  @ManyToOne(() => User, { nullable: false })
+  user: User
 }

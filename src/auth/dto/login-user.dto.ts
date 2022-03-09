@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv';
 dotenv.config({ path: `./env/${process.env.NODE_ENV}.env` })
 const mobilePrefixRegex = /^\+/;
 
-export class LoginApplicantDto {
+export class LoginUserDto {
   @ApiProperty({ example: '+7888888888', description: 'Phone number' })
   @IsNotEmpty()
   @Matches(mobilePrefixRegex, {

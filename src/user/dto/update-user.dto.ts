@@ -1,12 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsEnum, IsMobilePhone, IsNotEmpty, IsOptional, IsString, Matches } from "class-validator";
-import { ApplicantType } from "../types/applicant-type";
+import { IsEmail, IsMobilePhone, IsNotEmpty, IsOptional, IsString, Matches } from "class-validator";
 import * as dotenv from 'dotenv';
 
 dotenv.config({ path: `./env/${process.env.NODE_ENV}.env` });
 const mobilePrefixRegex = /^\+/;
 
-export class CreateApplicantDto {
+export class UpdateUserDto {
   @ApiProperty({ example: '+78888888888', description: 'Phone number' })
   @IsNotEmpty()
   @Matches(mobilePrefixRegex, {
@@ -29,14 +28,4 @@ export class CreateApplicantDto {
   @IsOptional()
   @IsEmail()
   readonly email: string;
-
-  @ApiProperty({ example: '56fdg56', description: 'SMS code' })
-  @IsNotEmpty()
-  @IsString()
-  readonly code: string;
-
-  @ApiProperty({ example: 'human', description: 'Who is applicant? (humman or company)' })
-  @IsNotEmpty()
-  @IsEnum(ApplicantType)
-  readonly type: ApplicantType
 }

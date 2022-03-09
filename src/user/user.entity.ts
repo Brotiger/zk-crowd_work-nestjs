@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn } from 'typeorm'
 import { Issue } from '../issue/issue.entity'
 import { UploadFile } from '../upload-file/upload-file.entity'
-import { ApplicantType } from './types/applicant-type'
+import { UserType } from '../user-type/user-type.entity'
 
 @Entity()
-export class Applicant {
+export class User {
   @ApiProperty({ example: '1', description: 'Unique identificator' })
   @PrimaryGeneratedColumn()
   id: number
@@ -26,9 +26,10 @@ export class Applicant {
   @Column({ nullable: true, unique: true })
   email: string
 
-  @ApiProperty({ example: 'human', description: 'Who is applicant? (humman or company)' })
-  @Column({ default: ApplicantType['humman'] })
-  type: ApplicantType
+  @ApiProperty({ description: 'Who is user? (humman or company)' })
+  @OneToOne(() => UserType, type => type.id)
+  @JoinColumn()
+  type: UserType
 
   @OneToMany(() => Issue, issue => issue.id)
   issues: Issue[]
