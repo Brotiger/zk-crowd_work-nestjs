@@ -9,6 +9,7 @@ import { IssueService } from './issue.service';
 
 @Module({
   imports: [
+    FilesModule,
     UserModule,
     FilesModule,
     TypeOrmModule.forFeature([Issue]),

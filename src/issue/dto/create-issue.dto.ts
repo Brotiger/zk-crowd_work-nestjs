@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsArray, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { UploadFileDto } from "../../upload-file/dto/upload-file.dto";
 
 export class CreateIssueDto {
   @ApiProperty({ example: 'No light', description: 'Short description' })
@@ -11,4 +12,9 @@ export class CreateIssueDto {
   @IsNotEmpty()
   @IsString()
   readonly description: string;
+
+  @ApiProperty({ example: [{ 'hash': '78e731027d8fd50ed642340b7c9a63b3' }], description: 'Md5 files hash list' })
+  @IsOptional()
+  @IsArray()
+  readonly files: UploadFileDto[];
 }

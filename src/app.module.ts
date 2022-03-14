@@ -12,6 +12,8 @@ import { configuration } from './config/configuration';
 import { IssueModule } from './issue/issue.module';
 import { UploadFile } from './upload-file/upload-file.entity';
 import { UserTypeModule } from './user-type/user-type.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path';
 
 @Module({
   imports: [
@@ -21,7 +23,10 @@ import { UserTypeModule } from './user-type/user-type.module';
       load: [configuration],
       isGlobal: true
     }),
-
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, 'static'),
+      serveRoot: '/'
+    }),
     TypeOrmModule.forRoot(),
     UserModule,
     OneTimeCodeModule,

@@ -17,6 +17,11 @@ export class UserTypeService {
   ) { }
 
   async create(createUserTypeDto: CreateUserTypeDto) {
+    const candidate = await this.getByName(createUserTypeDto.name);
+
+    if (candidate) {
+      throw new HttpException('User type with this name is already exists', HttpStatus.BAD_REQUEST);
+    }
 
     const userType = this.userTypeRepository.create(createUserTypeDto);
     userType.name = createUserTypeDto.name;
@@ -56,6 +61,20 @@ export class UserTypeService {
 
     } catch (e) {
       throw new HttpException('User type not updated', HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  private async getByName(name: string) {
+    try {
+      const userType = await this.userTypeRepository.findOneOrFail({
+        where: {
+          "name": name
+        }
+      });
+
+      return userType;
+    } catch (e) {
+      return false;
     }
   }
 }

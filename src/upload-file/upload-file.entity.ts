@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany } from 'typeorm'
+import { Issue } from '../issue/issue.entity'
 import { User } from '../user/user.entity'
 
 @Entity()
@@ -12,6 +13,10 @@ export class UploadFile {
   @Column()
   name: string
 
-  @ManyToOne(() => User)
-  user: User
+  @ManyToMany(() => Issue, issue => issue.id)
+  issue: Issue[]
+
+  @ApiProperty({ example: '78e731027d8fd50ed642340b7c9a63b3', description: 'Md5 hash' })
+  @Column({ unique: true })
+  hash: string
 }

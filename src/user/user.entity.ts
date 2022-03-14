@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn, ManyToOne } from 'typeorm'
 import { Issue } from '../issue/issue.entity'
 import { UploadFile } from '../upload-file/upload-file.entity'
 import { UserType } from '../user-type/user-type.entity'
@@ -27,13 +27,9 @@ export class User {
   email: string
 
   @ApiProperty({ description: 'Who is user? (humman or company)' })
-  @OneToOne(() => UserType, type => type.id)
-  @JoinColumn()
+  @ManyToOne(() => UserType)
   type: UserType
 
   @OneToMany(() => Issue, issue => issue.id)
   issues: Issue[]
-
-  @OneToMany(() => UploadFile, file => file.id)
-  files: UploadFile[]
 }

@@ -11,6 +11,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PaginatedDto } from '../components/paginated/dto/paginated-dto';
 import { PageMetaDto } from '../components/paginated/dto/page-meta.dto';
 import { UserTypeService } from '../user-type/user-type.service';
+import { decode } from 'punycode';
 
 @Injectable()
 export class UserService {
@@ -66,7 +67,6 @@ export class UserService {
 
       return user;
     } catch (e) {
-      console.log(e)
       throw new HttpException('User is not found', HttpStatus.BAD_REQUEST);
     }
   }
