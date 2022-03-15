@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsArray, IsInt, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { UploadFileDto } from "../../upload-file/dto/upload-file.dto";
 
 export class CreateIssueDto {
@@ -17,4 +17,9 @@ export class CreateIssueDto {
   @IsOptional()
   @IsArray()
   readonly files: UploadFileDto[];
+
+  @ApiProperty({ example: 1, description: 'Issue status id' })
+  @IsNotEmpty()
+  @IsInt()
+  readonly statusId: number;
 }

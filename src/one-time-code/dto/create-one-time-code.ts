@@ -6,7 +6,7 @@ dotenv.config({ path: `./env/${process.env.NODE_ENV}.env` })
 const mobilePrefixRegex = /^\+/;
 
 export class CreateOneTimeCodeDto {
-  @ApiProperty({ example: '+78888888888', description: 'Номер телефона' })
+  @ApiProperty({ example: process.env.PHONE_EXAMPLE, description: 'Номер телефона' })
   @IsNotEmpty()
   @Matches(mobilePrefixRegex, {
     message: 'phone must start with +'

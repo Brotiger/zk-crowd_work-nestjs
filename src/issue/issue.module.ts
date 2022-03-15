@@ -6,12 +6,14 @@ import { FilesModule } from '../upload-file/upload-file.module';
 import { IssueController } from './issue.controller';
 import { Issue } from './issue.entity';
 import { IssueService } from './issue.service';
+import { IssueStatusModule } from '../issue-status/issue-status.module';
 
 @Module({
   imports: [
     FilesModule,
     UserModule,
     FilesModule,
+    IssueStatusModule,
     TypeOrmModule.forFeature([Issue]),
     forwardRef(() => AuthModule)
   ],

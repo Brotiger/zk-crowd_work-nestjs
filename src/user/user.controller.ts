@@ -14,13 +14,6 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
-  @ApiOperation({ summary: "Get users list" })
-  @ApiPaginated(User)
-  @Get()
-  getAll(@Query() getAllUserDto: GetAllUserDto) {
-    return this.userService.getAll(getAllUserDto);
-  }
-
   @ApiOperation({ summary: "Get information about current user" })
   @ApiResponse({ status: 200, type: User })
   @UseGuards(JwtAuthGuard)
@@ -35,6 +28,13 @@ export class UserController {
   @Get("/:id")
   getOne(@Param() getOneUserDto: GetOneUserDto) {
     return this.userService.getOne(getOneUserDto.id);
+  }
+
+  @ApiOperation({ summary: "Get users list" })
+  @ApiPaginated(User)
+  @Get()
+  getAll(@Query() getAllUserDto: GetAllUserDto) {
+    return this.userService.getAll(getAllUserDto);
   }
 
   @ApiOperation({ summary: "Update information about current user" })

@@ -13,6 +13,7 @@ import { IssueModule } from './issue/issue.module';
 import { UploadFile } from './upload-file/upload-file.entity';
 import { UserTypeModule } from './user-type/user-type.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { IssueStatusModule } from './issue-status/issue-status.module';
 import * as path from 'path';
 
 @Module({
@@ -35,7 +36,8 @@ import * as path from 'path';
     SmsModule,
     IssueModule,
     UploadFile,
-    UserTypeModule
+    UserTypeModule,
+    IssueStatusModule
   ],
   providers: [CheckCodeService, SmsService]
 })

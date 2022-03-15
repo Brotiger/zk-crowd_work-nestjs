@@ -1,7 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm'
-import { Issue } from '../issue/issue.entity'
-import { UserType } from '../user-type/user-type.entity'
+import { ApiProperty } from '@nestjs/swagger';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
+import { Issue } from '../issue/issue.entity';
+import { UserType } from '../user-type/user-type.entity';
+import * as dotenv from 'dotenv';
+
+dotenv.config({ path: `./env/${process.env.NODE_ENV}.env` });
+const mobilePrefixRegex = /^\+/;
 
 @Entity()
 export class User {
@@ -17,7 +21,7 @@ export class User {
   @Column({ nullable: true })
   lastName: string
 
-  @ApiProperty({ example: '+78888888888', description: 'Phone number' })
+  @ApiProperty({ example: process.env.PHONE_EXAMPLE, description: 'Phone number' })
   @Column({ unique: true })
   phone: string
 

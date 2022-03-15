@@ -38,7 +38,7 @@ export class UserTypeController {
   @ApiOperation({ summary: "Update information about userType" })
   @ApiResponse({ status: 200, type: UserType })
   @Put("/:id")
-  updateCurrent(
+  update(
     @Param() idDto: IdDto,
     @Body() updateUserTypeDto: UpdateUserTypeDto) {
     return this.userTypeService.updateOne(updateUserTypeDto, idDto);

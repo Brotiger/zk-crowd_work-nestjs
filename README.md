@@ -23,6 +23,7 @@
 + SMS_TTL - Промежуток времени раз в который пользователь может получать СМС
 + DOC_PASSWORD - Пароль от Swagger (Логин - admin)
 + PAGINATE_RANGE - Максимальный размер limit
++ PHONE_EXAMPLE - Пример номера телефона для Swagger документации
 
 ## Установка зависимостей
 npm i -g @nestjs/cli

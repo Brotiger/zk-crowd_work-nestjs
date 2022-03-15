@@ -11,7 +11,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PaginatedDto } from '../components/paginated/dto/paginated-dto';
 import { PageMetaDto } from '../components/paginated/dto/page-meta.dto';
 import { UserTypeService } from '../user-type/user-type.service';
-import { decode } from 'punycode';
 
 @Injectable()
 export class UserService {
@@ -23,14 +22,14 @@ export class UserService {
   ) { }
 
   async create(createUserDto: CreateUserDto) {
-    await this.userTypeService.getOne(createUserDto.type.id)
+    const type = await this.userTypeService.getOne(createUserDto.typeId)
 
     const user = this.userRepository.create(createUserDto);
     user.phone = createUserDto.phone;
     user.firstName = createUserDto.firstName;
     user.lastName = createUserDto.lastName;
     user.email = createUserDto.email;
-    user.type = createUserDto.type;
+    user.type = type;
 
     return await this.userRepository.save(user);
   }
@@ -79,6 +78,7 @@ export class UserService {
   }
 
   async updateCurrent(currentUserTokenDto: CurrentUserTokenDto, updateUserDto: UpdateUserDto) {
+
     const decodeToken = await this.decodeToken(currentUserTokenDto)
     try {
       const user = await this.userRepository.findOneOrFail(decodeToken.id);
