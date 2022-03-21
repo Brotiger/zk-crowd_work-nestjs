@@ -20,8 +20,8 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .addBearerAuth()
     .setTitle('Crowd Work')
-    .setDescription('Документация REST API')
-    .setVersion('1.0.0')
+    .setDescription('REST API documentation')
+    .setVersion('2.0.0')
     .addTag('Brotiger')
     .build()
 

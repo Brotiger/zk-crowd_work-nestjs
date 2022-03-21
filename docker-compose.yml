@@ -16,8 +16,6 @@ services:
   mysql:
     image: mysql:5.7
     restart: always
-    ports: 
-      - 3306:3306
     container_name: crowd_work_mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-example}

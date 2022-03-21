@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, ManyToMany, JoinTable } from 'typeorm'
 import { IssueStatus } from '../issue-status/issue-status.entity'
-import { UploadFileDto } from '../upload-file/dto/upload-file.dto'
 import { UploadFile } from '../upload-file/upload-file.entity'
 import { User } from '../user/user.entity'
 

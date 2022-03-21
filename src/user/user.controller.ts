@@ -6,7 +6,7 @@ import { GetAllUserDto } from './dto/get-all-user.dto';
 import { GetOneUserDto } from './dto/get-one-user.dto';
 import { CurrentUserTokenDto } from './dto/current-user-token.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiPaginated } from '../components/paginated/api-pagitated';
+import { ApiPaginated } from '../components/paginated/api-paginated';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('Users')

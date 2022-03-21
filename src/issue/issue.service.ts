@@ -12,6 +12,7 @@ import { PaginatedDto } from '../components/paginated/dto/paginated-dto';
 import { IssueStatusService } from '../issue-status/issue-status.service';
 import { UpdateIssueDto } from './dto/update-issue.dto';
 import { IdDto } from '../dto/id.dto';
+import { ResponseIssueDto } from './response-dto/response-issue.dto';
 
 @Injectable()
 export class IssueService {
@@ -25,7 +26,6 @@ export class IssueService {
 
   async create(createIssueDto: CreateIssueDto, currentUserTokenDto: CurrentUserTokenDto) {
     const issueStatus = await this.issueStatusService.getOne(createIssueDto.statusId)
-    console.log(issueStatus)
 
     const issue = await this.issueRepository.create();
     const decodeToken = await this.userService.decodeToken(currentUserTokenDto);
@@ -47,24 +47,36 @@ export class IssueService {
 
     issue.files = files;
 
-    return await this.issueRepository.save(issue);
+    const issueResult = await this.issueRepository.save(issue);
+
+    return new ResponseIssueDto(issueResult);
   }
 
   async getOne(issueId: number) {
     try {
-      const user = await this.issueRepository.findOneOrFail(issueId, { relations: ["files", "status"] });
+      const issue = await this.issueRepository.findOneOrFail(issueId, { relations: ["files", "status"] });
 
-      return user;
+      return new ResponseIssueDto(issue);
     } catch (e) {
       throw new HttpException('Issue is not found', HttpStatus.BAD_REQUEST);
     }
   }
 
   async getAll(getAllIssueDto: GetAllIssueDto) {
-    const [issues, total] = await this.issueRepository.findAndCount({
+    const query = {
       take: getAllIssueDto.limit,
-      skip: getAllIssueDto.offset
-    });
+      skip: getAllIssueDto.offset,
+      where: {},
+      relations: ["status"]
+    }
+
+    if (getAllIssueDto.statusId) {
+      query.where = {
+        'status': getAllIssueDto.statusId
+      }
+    }
+
+    const [issues, total] = await this.issueRepository.findAndCount(query);
 
     const pageMetaDto = new PageMetaDto(total, getAllIssueDto.limit, getAllIssueDto.offset)
 
@@ -73,15 +85,21 @@ export class IssueService {
 
   async getAllByCurrentUser(getAllIssueDto: GetAllIssueDto, currentUserTokenDto: CurrentUserTokenDto) {
     const decodeToken = await this.userService.decodeToken(currentUserTokenDto);
-    console.log(decodeToken)
 
-    const [issues, total] = await this.issueRepository.findAndCount({
+    const query = {
       where: {
-        "id": decodeToken.id
+        "user": decodeToken.id,
       },
       take: getAllIssueDto.limit,
-      skip: getAllIssueDto.offset
-    });
+      skip: getAllIssueDto.offset,
+      relations: ["status"]
+    }
+
+    if (getAllIssueDto.statusId) {
+      query.where['status'] = getAllIssueDto.statusId
+    }
+
+    const [issues, total] = await this.issueRepository.findAndCount(query);
 
     const pageMetaDto = new PageMetaDto(total, getAllIssueDto.limit, getAllIssueDto.offset)
 
@@ -97,9 +115,10 @@ export class IssueService {
         issue.status = issueStatus;
       }
 
-      await this.issueRepository.save(issue)
+      await this.issueRepository.save(issue);
+      const issueResult = await this.issueRepository.findOneOrFail(idDto, { relations: ["files", "status"] });
 
-      return issue;
+      return new ResponseIssueDto(issueResult);
 
     } catch (e) {
       throw new HttpException('Issue not updated', HttpStatus.BAD_REQUEST);

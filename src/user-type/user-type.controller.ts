@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ApiPaginated } from '../components/paginated/api-pagitated';
+import { ApiPaginated } from '../components/paginated/api-paginated';
 import { IdDto } from '../dto/id.dto';
 import { CreateUserTypeDto } from './dto/create-user-type.dto';
 import { GetAllUserTypeDto } from './dto/get-all-user-type.dto';
@@ -15,7 +15,7 @@ export class UserTypeController {
   constructor(private readonly userTypeService: UserTypeService) { }
 
   @ApiOperation({ summary: "Create user type" })
-  @ApiResponse({ status: 200, type: UserType })
+  @ApiResponse({ status: 201, type: UserType })
   @Post()
   create(@Query() createUserTypeDto: CreateUserTypeDto) {
     return this.userTypeService.create(createUserTypeDto);

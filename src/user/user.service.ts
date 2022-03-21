@@ -34,14 +34,24 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
-  async getAll(dto: GetAllUserDto) {
-    const [user, total] = await this.userRepository.findAndCount({
-      take: dto.limit,
-      skip: dto.offset,
-      relations: ["type"]
-    });
+  async getAll(getAllUserDto: GetAllUserDto) {
 
-    const pageMetaDto = new PageMetaDto(total, dto.limit, dto.offset)
+    const query = {
+      take: getAllUserDto.limit,
+      skip: getAllUserDto.offset,
+      relations: ["type"],
+      where: {
+
+      }
+    }
+
+    if (getAllUserDto.typeId) {
+      query.where['type'] = getAllUserDto.typeId
+    }
+
+    const [user, total] = await this.userRepository.findAndCount(query);
+
+    const pageMetaDto = new PageMetaDto(total, getAllUserDto.limit, getAllUserDto.offset)
 
     return new PaginatedDto(user, pageMetaDto)
   }
@@ -87,10 +97,9 @@ export class UserService {
       user.phone = updateUserDto.phone;
       user.email = updateUserDto.email;
 
-      await this.userRepository.save(user)
+      const updatedUser = await this.userRepository.save(user);
 
-      return user;
-
+      return await this.userRepository.findOneOrFail(updatedUser.id);
     } catch (e) {
       throw new HttpException('User not updated', HttpStatus.BAD_REQUEST);
     }

@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class UploadFileDto {
+export class ResponseUploadFileDto {
   constructor(hash: string) {
     this.hash = hash
   }

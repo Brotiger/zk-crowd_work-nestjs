@@ -25,7 +25,6 @@ export class SmsService {
         to: phone,
       });
     } catch (e) {
-      console.log(e)
       throw new HttpException('Code message not sent', HttpStatus.FORBIDDEN);
     }
   }

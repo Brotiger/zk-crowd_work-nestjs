@@ -11,14 +11,14 @@ export class AuthController {
   constructor(private authService: AuthService) { }
 
   @ApiOperation({ summary: "Sing in" })
-  @ApiResponse({ status: 200, type: LoginTokenDto, description: "Return jwt token" })
+  @ApiResponse({ status: 201, type: LoginTokenDto, description: "Return bearer jwt token" })
   @Post('/login')
   login(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto)
   }
 
   @ApiOperation({ summary: "Sign up" })
-  @ApiResponse({ status: 200, type: LoginTokenDto, description: "Return jwt token" })
+  @ApiResponse({ status: 201, type: LoginTokenDto, description: "Return bearer jwt token" })
   @Post('/registration')
   registration(@Body() createUserDto: CreateUserDto) {
     return this.authService.registration(createUserDto)

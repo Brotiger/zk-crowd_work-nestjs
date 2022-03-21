@@ -1,6 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty, IsString } from "class-validator";
 
 export class LoginTokenDto {
-  @ApiProperty({ example: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijg5MzcwNzA1MTk4IiwidHlw', description: 'Bearer JWT token' })
+  @ApiProperty({ example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ3ODgyNzQ0LCJleHAiOjE2NDc5NjkxNDR9.hYb7SU0T10BfrvBkwgPONGvZjMKrMixK_fyMBvPfufE', description: 'Bearer JWT token' })
+  @IsNotEmpty()
+  @IsString()
   readonly token: string;
 }

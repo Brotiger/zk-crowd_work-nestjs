@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
-import { IsInt, IsNotEmpty, Max } from "class-validator";
+import { IsInt, IsNotEmpty, IsOptional, Max } from "class-validator";
 import * as dotenv from 'dotenv';
 
 dotenv.config({ path: `./env/${process.env.NODE_ENV}.env` });
@@ -18,4 +18,11 @@ export class GetAllIssueDto {
   @Max(Number(process.env.PAGINATE_RANGE))
   @Transform(({ value }) => Number.parseInt(value))
   readonly limit: number;
+
+  @ApiProperty({ required: false, example: 1, description: 'Status Id' })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsInt()
+  @Transform(({ value }) => Number.parseInt(value))
+  readonly statusId: number;
 }

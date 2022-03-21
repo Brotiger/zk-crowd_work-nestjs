@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as uuid from 'uuid';
-import { UploadFileDto } from './dto/upload-file.dto';
+import { ResponseUploadFileDto } from './response-dto/response-upload-file.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UploadFile } from './upload-file.entity';
 import { Repository } from 'typeorm';
@@ -40,7 +40,7 @@ export class UploadFileService {
         dbFile = await this.uploadFileRepository.save(uploadFile);
       }
 
-      const uploadFileDto = new UploadFileDto(dbFile.hash);
+      const uploadFileDto = new ResponseUploadFileDto(dbFile.hash);
 
       return uploadFileDto;
     } catch (e) {

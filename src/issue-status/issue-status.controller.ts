@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ApiPaginated } from '../components/paginated/api-pagitated';
+import { ApiPaginated } from '../components/paginated/api-paginated';
 import { IdDto } from '../dto/id.dto';
 import { CreateIssueStatusDto } from './dto/create-issue-status.dto';
 import { GetAllIssueStatusDto } from './dto/get-all-issue-status';
@@ -15,7 +15,7 @@ export class IssueStatusController {
   constructor(private readonly issueStatusService: IssueStatusService) { }
 
   @ApiOperation({ summary: "Create new issue status" })
-  @ApiResponse({ status: 200, type: IssueStatus })
+  @ApiResponse({ status: 201, type: IssueStatus })
   @Post()
   create(@Query() createIssueStatusDto: CreateIssueStatusDto) {
     return this.issueStatusService.create(createIssueStatusDto);
