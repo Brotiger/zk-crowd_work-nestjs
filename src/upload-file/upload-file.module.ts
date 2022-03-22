@@ -6,9 +6,11 @@ import { Issue } from '../issue/issue.entity';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
 import { UploadFile } from './upload-file.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule,
     UserModule,
     TypeOrmModule.forFeature([UploadFile]),
     forwardRef(() => AuthModule)

@@ -1,8 +1,10 @@
 import { applyDecorators } from "@nestjs/common"
 import { ApiBody, ApiProperty } from "@nestjs/swagger"
+import { IsNotEmpty } from "class-validator";
 
 class FileUploadDto {
-  @ApiProperty({ type: 'string', format: 'binary' })
+  @ApiProperty({ required: false, type: 'string', format: 'binary' })
+  @IsNotEmpty()
   file: any;
 }
 

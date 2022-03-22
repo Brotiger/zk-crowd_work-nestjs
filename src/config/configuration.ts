@@ -6,5 +6,7 @@ export const configuration = () => ({
   jwt_private_key: process.env.JWT_PRIVATE_KEY,
   jwt_expires_in: process.env.JWT_EXPIRES_IN,
   code_ttl: process.env.CODE_TTL,
-  sms_ttl: process.env.SMS_TTL
+  sms_ttl: process.env.SMS_TTL,
+  max_file_size: Number(process.env.MAX_FILE_SIZE),
+  image_ext: process.env.IMAGE_EXT.split(',')
 });

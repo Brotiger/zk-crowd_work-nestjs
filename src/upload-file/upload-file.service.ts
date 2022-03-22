@@ -7,15 +7,35 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UploadFile } from './upload-file.entity';
 import { Repository } from 'typeorm';
 import * as md5 from 'md5';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UploadFileService {
   constructor(
     @InjectRepository(UploadFile)
     private uploadFileRepository: Repository<UploadFile>,
+    private readonly configService: ConfigService
   ) { }
 
   async create(file: Express.Multer.File) {
+    if (!file || !('size' in file) || !('mimetype' in file)) {
+      throw new HttpException('This is not a file', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    if (file.size > this.configService.get('max_file_size') * 1024) {
+      throw new HttpException(`The file should not weigh more than ${this.configService.get('max_file_size')} kilobytes`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    try {
+      const [type, ext] = file.mimetype.split('/');
+
+      if (!(this.configService.get('image_ext').includes(ext))) {
+        throw new Error(`The file must be of the following type: ${this.configService.get('image_ext').join(', ')}`);
+      }
+    } catch {
+      throw new HttpException(`The file must be of the following type: ${this.configService.get('image_ext').join(', ')}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     try {
       const hash = md5(file.buffer);
 
@@ -44,7 +64,7 @@ export class UploadFileService {
 
       return uploadFileDto;
     } catch (e) {
-      throw new HttpException('Произошла ошибка при записи файла', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException('Writing file error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 

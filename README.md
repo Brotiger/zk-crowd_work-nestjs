@@ -24,6 +24,8 @@
 + DOC_PASSWORD - Пароль от Swagger (Логин - admin)
 + PAGINATE_RANGE - Максимальный размер limit
 + PHONE_EXAMPLE - Пример номера телефона для Swagger документации
++ MAX_FILE_SIZE - Максимальный вес файла в килобайтах
++ IMAGE_EXT - Допустимые расширения изображений
 
 ## Установка зависимостей
 npm i -g @nestjs/cli
